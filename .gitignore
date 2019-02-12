@@ -92,9 +92,8 @@ dist/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-# Config for development environment
-config/development-hot.json
-config/development.json
+# Config files
+config/
 
 # Config file is automatically built by webpack each build
 utilities/client.json
