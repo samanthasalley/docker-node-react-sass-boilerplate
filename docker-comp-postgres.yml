@@ -1,0 +1,31 @@
+# command to run:
+# docker-compose -f docker-comp-postgres.yml up
+
+# This will start postgres db container with it's associated data volumes container
+
+version: "3"
+services:
+
+  postgres-db:
+    environment:
+      - POSTGRES_PASSWORD=<db-password>
+      - POSTGRES_USER=<db-username>
+      - POSTGRES_DB=<db-name>
+    image: <docker-org-name>/<db-image-name>
+    container_name: <app-name>-postgres
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+      - ./scripts/postgres-db:/postgres-db
+    depends_on:
+      - postgres-data
+
+  postgres-data:
+    image: busybox
+    container_name: <app-name>-dev-dbdata
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+
+# shared volumes
+volumes:
+  dev-db-volume:
+  node_modules:
