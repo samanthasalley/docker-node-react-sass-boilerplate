@@ -8,7 +8,7 @@
 
 version: "3"
 services:
-
+  # updates dev service from docker-comp-dev.yml with new container_name, new command, and additional port (to include HMR)
   dev:
     container_name: "<app-name>-dev-hot"
     ports:

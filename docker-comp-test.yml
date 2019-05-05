@@ -8,7 +8,7 @@ version: "3"
 services:
 
   test:
-    image: <docker-org-name>/<dependency-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: <app-name>-test
     ports:
       - "3000:3000"
@@ -25,20 +25,12 @@ services:
       - POSTGRES_PASSWORD=<db-password>
       - POSTGRES_USER=<db-username>
       - POSTGRES_DB=<db-name>
-    image: <docker-org-name>/<db-image-name>
+    image: <docker-org-name>/<app-name>-postgres
     container_name: <app-name>-postgres-db-test
     volumes:
       - test-db-volume:/var/lib/postgresql/data
       - ./scripts/postgres-db:/postgres-db
-    depends_on:
-      - postgres-data-test
 
-  postgres-data-test:
-    image: busybox
-    container_name: <app-name>-test-dbdata
-    volumes:
-      - test-db-volume:/var/lib/postgresql/data
-    command: tail -f /dev/null
 # shared volumes
 volumes:
   test-db-volume:

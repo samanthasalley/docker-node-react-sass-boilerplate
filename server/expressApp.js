@@ -27,35 +27,6 @@ const exampleRouter = require('./routes/exampleRouter');
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
-  console.log('in development mode');
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-
-  const webpackConfig = require('../webpack/dev.config.js');
-  const compiler = webpack(webpackConfig);
-
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    noInfo: true,
-  }));
-
-  app.use(webpackHotMiddleware(compiler));
-
-  app.use(logger('dev'));
-
-  // Allow cors only on development
-  app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-}
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-
 // session logic
 const secret = config.get('session-secret');
 const sessionConfig = {
@@ -65,14 +36,28 @@ const sessionConfig = {
   saveUninitialized: false, // only create sessions for users who log in
   store: new pgSession({ pool: pgPool }), // store user session data in database
   cookie: { secure: true, maxAge: 14 * 24 * 60 * 60 * 1000 } // 14 day session
-}
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'development-hot') {
+};
+
+// settings/configs specific to development
+if (process.env.NODE_ENV === 'development') {
+  console.log('in development mode');
+
   sessionConfig.cookie.secure = false; // set cookies on http for dev
+  
+  // Allow cors only on development
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 }
 
 // let express know that we're sitting behind a proxy server (the AWS load balancer)
 // that's handling http -> https redirects
 app.set('trust proxy', true);
+
+// server log middleware
+app.use(logger(':date[clf] :method :url :status :response-time ms - :res[content-length]'));
 
 app.use(session(sessionConfig));
 app.use(passport.initialize());
@@ -85,7 +70,7 @@ app.use(cookieParser(secret));
 app.use(flash({ locals: 'flash' }));
 app.use(express.static('dist'));
 
-// serve static pages such as the graduate outcomes PDF from the /public dir
+// serve static pages (i.e. cookies policy / t&c)
 app.use('/public', express.static(path.join(__dirname, './public')));
 
 // add skip prop to res.locals for setting mw skip flags

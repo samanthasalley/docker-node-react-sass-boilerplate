@@ -3,7 +3,7 @@ services:
   # To be run from Travis CI ->
   # docker-compose run --rm --service-ports start-prod
   start-prod:
-    image: <docker-org-name>/<image-name>
+    image: <docker-org-name>/<app-name>
     ports:
       - "3000:3000"
     volumes:
@@ -18,7 +18,7 @@ services:
   # BUILD COMMANDS: ->
   # docker-compose run --rm build-dev
   build-dev:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-dev"
     volumes:
       - ./:/usr/src/app
@@ -27,7 +27,7 @@ services:
 
   # docker-compose run --rm build-prod
   build-prod:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app=name>-prod"
     volumes:
       - ./:/usr/src/app
@@ -36,11 +36,10 @@ services:
   # <- Build Commands
 
 
-
   # Bash - allows for running scripts in container.
   # docker-compose run --rm --service-ports bash
   bash:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-dev"
     ports:
       - "8080:8080"
@@ -53,7 +52,7 @@ services:
   # DEV COMMANDS: without spinning up docker/postgres  ->
   # docker-compose run --rm --service-ports dev
   dev:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-dev"
     ports:
       - "3000:3000"
@@ -64,7 +63,7 @@ services:
 
   # docker-compose run --rm --service-ports dev-hot
   dev-hot:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-dev-hot"
     ports:
       - "8080:8080"
@@ -80,7 +79,7 @@ services:
   # TEST COMMANDS: without spinning up docker/postgres ->
   # docker-compose run --rm --service-ports test
   test:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-test"
     ports:
       - "3000:3000"
@@ -91,7 +90,7 @@ services:
 
   # docker-compose run --rm --service-ports test-updateSnapshot
   test-updateSnapshot:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     ports:
       - "3000:3000"
     volumes:
@@ -101,7 +100,7 @@ services:
 
   # docker-compose run --rm --service-ports test-watch
   test-watch:
-    image: <docker-org-name>/<dependencies-image-name>
+    image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-test"
     ports:
       - "3000:3000"

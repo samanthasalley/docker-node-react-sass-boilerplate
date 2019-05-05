@@ -8,15 +8,17 @@
  *
  * ************************************
  */
-
+// dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import { BrowserRouter, Route } from 'react-router-dom';
+// components
 import App from './App';
-import store from './store';
 import LocationListener from './components/navigation/LocationListener';
+// utils
+import store from './store';
 
 // import for global styles
 import './stylesheets/global/style.scss';
@@ -37,7 +39,3 @@ const render = (Component) => {
 };
 
 render(App);
-
-if (module.hot) {
-  module.hot.accept('./App.jsx', function () { return render(App) });
-}

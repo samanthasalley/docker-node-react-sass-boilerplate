@@ -6,7 +6,7 @@
 
 version: "3"
 services:
-
+  # start development client/server container (no HMR)
   dev:
     image: <docker-org-name>/<app-name>-dependencies
     container_name: "<app-name>-dev"
@@ -20,6 +20,7 @@ services:
       - postgres-data
     command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db", "${DATABASE_MIGRATIONS}", "dev", "${DATABASE_SCOPES}"]
 
+  # start database container
   postgres-db:
     environment:
       - POSTGRES_PASSWORD=<db-password>
@@ -30,14 +31,6 @@ services:
     volumes:
       - dev-db-volume:/var/lib/postgresql/data
       - ./scripts/postgres-db:/postgres-db
-    depends_on:
-      - postgres-data
-
-  postgres-data:
-    image: busybox
-    container_name: <app-name>-dev-dbdata
-    volumes:
-      - dev-db-volume:/var/lib/postgresql/data
 
 # shared volumes for development
 volumes:

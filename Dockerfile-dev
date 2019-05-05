@@ -1,5 +1,5 @@
-# ubuntu 16.04 with node 8.9.3
-FROM <docker-org-name>/ubuntu-<app-name>
+# Start with Node v10.1
+FROM node:10.1
 
 # Install webpack dev server
 RUN npm install webpack -g
@@ -15,5 +15,5 @@ WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 RUN npm install
 
-# replace this with your application's default port
+# replace this with your application server's default port
 EXPOSE 3000

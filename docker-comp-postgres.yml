@@ -1,3 +1,5 @@
+# TODO: delete this whole file? already available in docker-comp-dev, do we need it here too??
+
 # command to run:
 # docker-compose -f docker-comp-postgres.yml up
 
@@ -18,12 +20,6 @@ services:
       - ./scripts/postgres-db:/postgres-db
     depends_on:
       - postgres-data
-
-  postgres-data:
-    image: busybox
-    container_name: <app-name>-dev-dbdata
-    volumes:
-      - dev-db-volume:/var/lib/postgresql/data
 
 # shared volumes
 volumes:
