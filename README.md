@@ -39,6 +39,19 @@ This boilerplate uses the following frameworks/libs/configurations for main fron
 * css-modules: For scoped component styling
 * prop-types: For better prop validation
 
+## Backend
+
+### Technologies
+
+This boilerplate uses the following frameworks/libs/configurations for main backend application (this is not an exhaustive list, but includes the main ones):
+* Node
+* Express
+* Postgres
+
+## Testing
+
+This boilerplate includes infrastructure for testing with Jest and Enzyme
+
 ## Getting Started
 
 Refer to docs/GettingStarted.md
